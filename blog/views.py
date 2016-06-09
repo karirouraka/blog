@@ -4,7 +4,4 @@ from django.template import Context,Template
 from django.template.loader import  render_to_string
 # Create your views here.
 
-def git_test(request):
-    return HttpResponse()
-
 
