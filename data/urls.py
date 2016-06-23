@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from blog.views import index_page,get_post_by_category, get_content_by_title
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', index_page,name='index_page'),
+    url(r'^get_post_by_category/(?P<category_pk>\d+)/$',get_post_by_category,name='get_post_by_category'),
+    url(r'^get_content_by_title/(?P<post_pk>\d+)/$', get_content_by_title, name='get_content_by_title'),
     #url(r'^',include('numbers_app.urls')),
     # url(r'^fill_out',fill_out, name='fill_out'),
     # url(r'^calc/$', calculations, name='calc'),
