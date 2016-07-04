@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post_vote_success">
+    <p>You success vote for article </p>
+
+</div>
+<a href="{% url 'get_content_by_title' post_pk %}">Back</a>
+{% endblock %}

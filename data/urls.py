@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-from blog.views import index_page,get_post_by_category, get_content_by_title
+from blog.views import index_page,get_post_by_category, get_content_by_title, increase_likes,success_vote, decrease_likes
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index_page,name='index_page'),
     url(r'^get_post_by_category/(?P<category_pk>\d+)/$',get_post_by_category,name='get_post_by_category'),
     url(r'^get_content_by_title/(?P<post_pk>\d+)/$', get_content_by_title, name='get_content_by_title'),
+    url(r'^increase_likes/(?P<post_pk>\d+)/$', increase_likes, name='increase_likes'),
+    url(r'^success_vote/(?P<post_pk>\d+)/$', success_vote, name='success_vote'),
+    url(r'^decrease_likes/(?P<post_pk>\d+)/$', decrease_likes, name='decrease_likes'),
     #url(r'^',include('numbers_app.urls')),
     # url(r'^fill_out',fill_out, name='fill_out'),
     # url(r'^calc/$', calculations, name='calc'),

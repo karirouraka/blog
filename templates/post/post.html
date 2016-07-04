@@ -2,10 +2,23 @@
 
 {% block content %}
 <div class="post">
-    <h4>{{ post.title }}</h4>
+    <h4>{{ post.title }} {{ post.likes }}</h4>
     <p>{{ post.date }}</p>
     <div class="content">
         {{ post.article }}
     </div>
+    <!--<div class="likes_button">-->
+        <!--<a href="{% url 'increase_likes' post.pk %}">like</a>-->
+    <!--</div>-->
+    <form method="POST" action ="{% url 'increase_likes' post.pk %}">
+        {% csrf_token %}
+        <button type="submit">Like</button>
+    </form>
+    {% if post.likes > 0 %}
+        <form method="POST" action ="{% url 'decrease_likes' post.pk %}">>
+            {% csrf_token %}
+            <button type="submit">Dislike</button>
+        </form>
+    {% endif %}
 </div>
 {% endblock %}
