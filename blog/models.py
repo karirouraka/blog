@@ -21,8 +21,9 @@ class BlogPost(models.Model):
     date = models.DateTimeField(auto_now=True)
     likes = models.IntegerField(default=0, null=True, blank=True)
     is_publish = models.BooleanField(default= False)
-    # image  = models.ImageField(upload_to="images"
+    image  = models.ImageField(null=True,blank=True,upload_to="images")
     cat = models.ManyToManyField(BlogPostCategory,related_name ="posts")
+
 
     class Meta:
         ordering = ['-pk']
@@ -43,4 +44,25 @@ class BlogPost(models.Model):
             self.likes -= 1
             self.save()
 
+    def count_comments(self):
+        return self.comments.filter(publish=True).count()
 
+
+
+
+class Comment(models.Model):
+    author = models.CharField(max_length=300)
+    text = models.TextField()
+    date = models.DateTimeField(auto_now=True)
+    post = models.ForeignKey(BlogPost, related_name="comments")
+    publish = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.author + ' ' + self.text[:20]
+
+
+class SearchKeyWords(models.Model):
+    keywords = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.keywords

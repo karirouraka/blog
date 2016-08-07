@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="posts" >
+    {% for new_post in new_posts %}
+
+       <a href="{% url 'get_content_by_title' new_post.pk  %}"> {{ new_post.title  }} - {{ new_post.count_comments }}</a></br>
+        <p>{{ new_post.get_short_description }}</p>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

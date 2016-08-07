@@ -13,9 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url,include,patterns
 from django.contrib import admin
-from blog.views import index_page,get_post_by_category, get_content_by_title, increase_likes,success_vote, decrease_likes
+from blog.views import index_page,get_post_by_category, get_content_by_title, increase_likes,success_vote, decrease_likes, \
+    search_by_key_words, send_comment
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,6 +26,8 @@ urlpatterns = [
     url(r'^increase_likes/(?P<post_pk>\d+)/$', increase_likes, name='increase_likes'),
     url(r'^success_vote/(?P<post_pk>\d+)/$', success_vote, name='success_vote'),
     url(r'^decrease_likes/(?P<post_pk>\d+)/$', decrease_likes, name='decrease_likes'),
+    url(r'^search_by_key_words/$', search_by_key_words, name='search_by_key_words'),
+    url(r'^send_comment/(?P<post_pk>\d+)/$', send_comment, name='send_comment'),
     #url(r'^',include('numbers_app.urls')),
     # url(r'^fill_out',fill_out, name='fill_out'),
     # url(r'^calc/$', calculations, name='calc'),
@@ -32,3 +35,8 @@ urlpatterns = [
     # url(r'^substitute/$', substitute, name = 'substitute'),
     # url(r'^delete_small/$', 'numbers_app.views.delete_small', name='delete'),
 ]
+from django.conf import settings
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT}))

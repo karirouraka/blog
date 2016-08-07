@@ -61,7 +61,7 @@
     </nav>
 
     <!-- Page Content -->
-    <br class="container">
+    <div class="container">
         <div class="category">
             {% for category in categories %}
                <a href="{% url 'get_post_by_category' category.pk  %}"> {{ category.title  }}</a></br>
@@ -70,15 +70,22 @@
 
         </div>
 
-        <div class="posts">
-            {% for new_post in new_posts %}
-               <a href="{% url 'get_content_by_title' new_post.pk  %}"> {{ new_post.title  }}</a></br>
-                <p>{{ new_post.get_short_description }}</p>
 
+        <div>
+            <p>Form as object</p>
 
-            {% endfor %}
+            <form method="POST" action="{% url 'search_by_key_words' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                <input type="submit" />
+
+            </form>
+
 
         </div>
+
+
 
         <div class="row">
         {% block content %}
@@ -86,6 +93,7 @@
         {% endblock %}
         </div>
     </div>
+
  <!-- /.container -->
 
     <div class="container">

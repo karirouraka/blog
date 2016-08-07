@@ -4,6 +4,7 @@
 <div class="post">
     <h4>{{ post.title }} {{ post.likes }}</h4>
     <p>{{ post.date }}</p>
+    <img src="{{ post.image.url}}" style="width:200px;heigth:200px"> </img>
     <div class="content">
         {{ post.article }}
     </div>
@@ -15,10 +16,30 @@
         <button type="submit">Like</button>
     </form>
     {% if post.likes > 0 %}
-        <form method="POST" action ="{% url 'decrease_likes' post.pk %}">>
+        <form method="POST" action ="{% url 'decrease_likes' post.pk %}">
             {% csrf_token %}
             <button type="submit">Dislike</button>
         </form>
+
     {% endif %}
+    <form method="POST" action ="{% url 'send_comment' post.pk %}">
+            {% csrf_token %}
+            {{ comments_form.as_p }}
+            <button type="submit">Send</button>
+    </form>
+
+    {% for comment in post.comments.all %}
+        {% if comment.publish %}
+            <div>
+                {{comment.author}}<br>
+                {{comment.text}}<br>
+                {{comment.date}}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+
+
 </div>
+
 {% endblock %}
